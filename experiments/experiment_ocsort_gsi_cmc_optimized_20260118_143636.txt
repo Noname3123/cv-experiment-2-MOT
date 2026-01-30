@@ -1,0 +1,24 @@
+Experiment Log - 20260118_143636
+========================================
+Model: yolo11x.pt
+Tracker: OC-SORT + ByteTrack + GSI (Gaussian Smoothing) + CMC
+Hyperparameters:
+  CONFIDENCE_THRESHOLD (High): 0.3
+  CONFIDENCE_LOW: 0.05
+  INFERENCE_SIZE: 1920
+  IOU_THRESHOLD: 0.25
+  MAX_AGE: 90
+  MIN_HITS: 3
+  INERTIA: 0.2
+  POST_PROCESSING: Gaussian Smoothed Interpolation (sigma=0.6)
+  CMC: Optical Flow (Affine)
+
+Results:
+                IDF1   IDP   IDR  Rcll  Prcn  GT  MT  PT  ML    FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-DPM   40.8% 55.3% 32.4% 44.8% 76.6%  62   9  31  22  2546 10256 101  148 30.6% 0.213  51  49   9
+MOT17-02-FRCNN 40.8% 55.3% 32.4% 44.8% 76.6%  62   9  31  22  2546 10256 101  148 30.6% 0.213  51  49   9
+MOT17-02-SDP   40.8% 55.3% 32.4% 44.8% 76.6%  62   9  31  22  2546 10256 101  148 30.6% 0.213  51  49   9
+MOT17-13-DPM   61.5% 69.9% 54.9% 65.9% 84.0% 110  37  56  17  1464  3974  48  118 52.9% 0.232  47  31  31
+MOT17-13-FRCNN 61.5% 69.9% 54.9% 65.9% 84.0% 110  37  56  17  1464  3974  48  118 52.9% 0.232  47  31  31
+MOT17-13-SDP   61.5% 69.9% 54.9% 65.9% 84.0% 110  37  56  17  1464  3974  48  118 52.9% 0.232  47  31  31
+OVERALL        49.4% 62.0% 41.0% 52.9% 80.0% 516 138 261 117 12030 42690 447  798 39.2% 0.222 294 240 120

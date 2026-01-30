@@ -1,0 +1,8 @@
+*.zip
+*.pt
+MOT17/
+mot17_*/
+sam2/
+samurai/
+*jpg
+*png

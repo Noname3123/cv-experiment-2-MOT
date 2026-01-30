@@ -1,0 +1,13 @@
+MOT17 Submission Log - 20260129_191855
+========================================
+Average Speed (Hz): 31.08
+Tracker: OC-SORT + ByteTrack + Interpolation + CMC
+Hyperparameters:
+  CONFIDENCE_THRESHOLD (High): 0.5
+  CONFIDENCE_LOW: 0.05
+  IOU_THRESHOLD: 0.3
+  MAX_AGE: 60
+  MIN_HITS: 3
+  INERTIA: 0.2
+  POST_PROCESSING: Linear Interpolation (max_gap=20)
+  CMC: Optical Flow (Affine)

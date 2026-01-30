@@ -1,0 +1,23 @@
+Experiment Log - 20260113_135953
+========================================
+Model: yolo11x.pt
+Tracker: OC-SORT + ByteTrack Logic + Interpolation
+Hyperparameters:
+  CONFIDENCE_THRESHOLD (High): 0.4
+  CONFIDENCE_LOW: 0.05
+  INFERENCE_SIZE: 1280
+  IOU_THRESHOLD: 0.3
+  MAX_AGE: 60
+  MIN_HITS: 3
+  INERTIA: 0.2
+  POST_PROCESSING: Linear Interpolation (max_gap=20)
+
+Results:
+                IDF1   IDP   IDR  Rcll  Prcn  GT  MT  PT  ML    FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-DPM   42.7% 55.3% 34.8% 46.9% 74.7%  62  10  30  22  2959  9862  80  123 30.6% 0.203  34  46   3
+MOT17-02-FRCNN 42.7% 55.3% 34.8% 46.9% 74.7%  62  10  30  22  2959  9862  80  123 30.6% 0.203  34  46   3
+MOT17-02-SDP   42.7% 55.3% 34.8% 46.9% 74.7%  62  10  30  22  2959  9862  80  123 30.6% 0.203  34  46   3
+MOT17-13-DPM   57.5% 71.5% 48.0% 60.0% 89.4% 110  33  49  28   831  4657  70  112 52.3% 0.225  46  42  19
+MOT17-13-FRCNN 57.5% 71.5% 48.0% 60.0% 89.4% 110  33  49  28   831  4657  70  112 52.3% 0.225  46  42  19
+MOT17-13-SDP   57.5% 71.5% 48.0% 60.0% 89.4% 110  33  49  28   831  4657  70  112 52.3% 0.225  46  42  19
+OVERALL        48.5% 61.8% 39.9% 52.0% 80.6% 516 129 237 150 11370 43557 450  705 38.9% 0.213 240 264  66
