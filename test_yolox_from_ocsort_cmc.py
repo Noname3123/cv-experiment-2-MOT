@@ -118,10 +118,6 @@ def main():
     print(f"Loading base model: {MODEL_WEIGHTS}...")
     model = YOLO(MODEL_WEIGHTS)
     
-      
-    # 3. Evaluate Detection
-    print(f"Starting detection evaluation on MOT17 (train set) with imgsz={IMG_SIZE}...")
-    
     # We use the generated yaml which points 'val' to the training images (since we have GT there)
     yaml_path = os.path.join(YOLO_DATASET_DIR, "mot17.yaml")
     
@@ -146,6 +142,41 @@ def main():
         plots=True
     )
     
+    # --- Custom Confusion Matrix Calculation ---
+    print("\n" + "="*40)
+    print("Custom Single-Class Confusion Matrix (Person vs Background)")
+    print("="*40)
+
+    # The confusion matrix from ultralytics has shape (nc+1, nc+1)
+    # where nc is the number of classes in the model (80 for COCO).
+    # The last row represents False Positives (predictions with no matching GT).
+    # The last column represents False Negatives (GT with no matching prediction).
+    # Our GT dataset only contains class 0 (person).
+
+    full_matrix = metrics.confusion_matrix.matrix
+    person_class_index = 0
+
+    # True Positives: GT is 'person' and prediction is 'person'.
+    tp = full_matrix[person_class_index, person_class_index]
+
+    # False Negatives: GT is 'person' but prediction is background (missed).
+    fn = full_matrix[person_class_index, -1]
+
+    # False Positives: GT is background but prediction is 'person'.
+    fp = full_matrix[-1, person_class_index]
+
+    print(f"True Positives (TP): {int(tp)}")
+    print(f"False Positives (FP): {int(fp)}")
+    print(f"False Negatives (FN): {int(fn)}")
+
+    print("\nSimple Matrix View:")
+    print("          | Pred Person | Pred Background (Missed)")
+    print("----------------------------------------------------")
+    print(f"GT Person | {int(tp):<11} | {int(fn):<11}")
+    print(f"GT Bkgnd  | {int(fp):<11} | TN: N/A")
+    print("="*40)
+    print("Note: The full confusion matrix plot from Ultralytics is also saved in the run directory.")
+
     print("\n" + "="*40)
     print(f"Detection Results for {MODEL_WEIGHTS} on MOT17 (Pedestrian)")
     print("="*40)

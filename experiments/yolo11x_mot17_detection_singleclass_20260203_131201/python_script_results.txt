@@ -1,0 +1,24 @@
+
+========================================
+Custom Single-Class Confusion Matrix (Person vs Background)
+========================================
+True Positives (TP): 23362
+False Positives (FP): 4837
+False Negatives (FN): 8940
+
+Simple Matrix View:
+          | Pred Person | Pred Background (Missed)
+----------------------------------------------------
+GT Person | 23362       | 8940       
+GT Bkgnd  | 4837        | TN: N/A
+========================================
+Note: The full confusion matrix plot from Ultralytics is also saved in the run directory.
+
+========================================
+Detection Results for yolo11x.pt on MOT17 (Pedestrian)
+========================================
+mAP@50:    0.7958
+mAP@50-95: 0.4850
+Precision: 0.7828
+Recall:    0.7371
+========================================
