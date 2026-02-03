@@ -118,6 +118,9 @@ def main():
     print(f"Loading base model: {MODEL_WEIGHTS}...")
     model = YOLO(MODEL_WEIGHTS)
     
+    # Explicitly set model names to a single class to ensure confusion matrix reflects this.
+    model.names = {0: 'person'}
+    
     # 3. Evaluate Detection
     print(f"Starting detection evaluation on MOT17 (train set) with imgsz={IMG_SIZE}...")
     
