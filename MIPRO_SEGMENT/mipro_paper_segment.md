@@ -16,7 +16,7 @@ The experiments were designed in an incremental manner: starting from baseline c
 
 # II. EXPERIMENTAL RESULTS AND ANALYSIS
 
-This section documents the experimental evaluation of the proposed tracking pipeline on the MOT17 benchmark. We focus on two primary configurations to assess the impact of input resolution and the effectiveness of the integrated tracking components.
+To determine the optimal tracking architecture, a total of 18 distinct experimental configurations were evaluated, exploring a spectrum of methodologies ranging from simple distance-based association to complex segmentation-driven tracking. Initial baselines utilizing Norfair and DeepSORT yielded modest MOTA scores of 21.4% and 12.3%, respectively, highlighting the limitations of standard re-identification embeddings and Euclidean matching in crowded scenes. Attempts to fine-tune the YOLO detector on the MOT17 training split resulted in performance degradation (MOTA < 20%), suggesting overfitting to the specific sequence characteristics. Similarly, the integration of the Segment Anything Model 2 (SAM2) proved ineffective for this task, suffering from excessive false positives. In contrast, the OC-SORT algorithm demonstrated superior potential; starting from a baseline MOTA of 22.3%, performance was progressively enhanced through hyperparameter tuning (35.8%), the incorporation of ByteTrack association logic (34.6%), and trajectory interpolation (38.9%). Building upon these findings, this section documents the experimental evaluation of the proposed tracking pipeline on the MOT17 benchmark, focusing on the two most effective configurations to assess the impact of input resolution and the effectiveness of the integrated tracking components.
 
 ## A. Experiment 10: Optimized OC-SORT with CMC
 
@@ -153,14 +153,14 @@ The results on the MOT17 test set using public detections are summarized in Tabl
 | **FP** | 18,638 | False Positives |
 | **FN** | 281,106 | False Negatives |
 
-### 3) Analysis
+### 3) Result Analysis
 The proposed tracking pipeline demonstrates robust performance even when relying on external public detections, achieving a MOTA of 46.6% and an IDF1 of 51.0%.
 
 
 Interestingly, the MOTA score on the test set with public detections (46.6%) is higher than that achieved on the training set with the YOLO11x detector (40.4% in Experiment 10). This difference is largely driven by the significantly higher Precision (93.8% vs. 82.7%), indicating that the provided public detections—while potentially missing more objects (Recall 50.2%)—contain fewer false positives than our fine-tuned YOLO model.
 
 
-The tracker maintained a high processing speed of 31.08 Hz, confirming its suitability for real-time applications. The IDF1 score of 51.0% remains consistent with the custom detector experiments (51.7%), suggesting that the tracker's ability to maintain identity is stable regardless of the detection source. However, the absolute number of ID switches (1,692) is higher, likely due to the larger size and diversity of the test set compared to the validation subset used in previous experiments, as well as the inherent noise in older detectors like DPM.
+The tracker maintained a high average processing speed of 31.08 Hz, confirming its suitability for real-time applications. The IDF1 score of 51.0% remains consistent with the custom detector experiments (51.7%), suggesting that the tracker's ability to maintain identity is stable regardless of the detection source. However, the absolute number of ID switches (1,692) is higher, likely due to the larger size and diversity of the test set compared to the validation subset used in previous experiments, as well as the inherent noise in older detectors like DPM.
 
 # III. CONCLUSION
 
