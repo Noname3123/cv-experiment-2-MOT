@@ -44,7 +44,7 @@ The performance of the YOLO11x detector was validated on the prepared subset of 
 
 *Figure 1: Confusion Matrix for the YOLO11x detector on the MOT17 pedestrian class.*
 
-![Precision-Recall Curve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxPR_curve.png)
+![Precision-Recall Curve](./images/BoxPR_curve.png)
 *Figure 2: Precision-Recall Curve demonstrating the detector's trade-off between false positives and false negatives.*
 
 As indicated by the validation artifacts in Figure 1 and Figure 2, the detector achieves an acceptable balance between precision and recall. The high true positive rate is crucial for the subsequent tracking stage, as the OC-SORT algorithm relies heavily on the quality of observations to correct its momentum-based predictions. 
@@ -53,18 +53,18 @@ Additional details can be seen by analysing the model's F1, P and R curves.
 
 Figure 3 depicts the F1-Confidence curve, illustrating the harmonic mean of precision and recall across varying confidence thresholds. The curve exhibits a stable plateau, indicating that the detector's performance is robust to threshold variations. The peak F1 score suggests an optimal trade-off point, which informs the selection of the high-confidence threshold ($0.5$) used in our tracking experiments. This ensures that the primary tracking associations are grounded in high-quality detections, while the subsequent association stages can exploit the higher recall available at lower confidence levels.
 
-![F1 Curve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxF1_curve.png)
+![F1 Curve](./images/BoxF1_curve.png)
 *Figure 3: F1-Confidence Curve. The curve demonstrates the optimal confidence threshold for maximizing the harmonic mean of precision and recall.*
 
 Figure 4 presents the Precision-Confidence curve, which characterizes the detector's reliability across the confidence spectrum. The curve demonstrates a monotonic increase in precision as the confidence threshold rises, indicating effective suppression of false positives at higher scores. At the operational threshold of $0.5$, the detector achieves a precision significantly above $0.8$, ensuring that the initial tracking candidates are of high quality. This high-precision regime is critical for the OC-SORT tracker, as it reduces the likelihood of initializing false tracks or incorrectly updating existing Kalman filters with background noise.
 
-![PCurve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxP_curve.png)
+![PCurve](./images/BoxP_curve.png)
 
 *Figure 4: Precision-Confidence Curve. The monotonic rise in precision validates the model's ability to filter false positives at higher confidence levels.*
 
 Finally, Figure 5 illustrates the Recall-Confidence curve, showing the inverse relationship between confidence and recall. As the confidence threshold increases, the system naturally retrieves fewer ground truth objects. While a threshold of $0.5$ reduces the raw detection recall, this trade-off is mitigated by the ByteTrack algorithm, which specifically recovers low-confidence detections ($0.1$ to $0.5$) during the second association stage. This hierarchical approach allows the system to maintain high precision for track initialization while preserving recall for ongoing trajectories.
 
-![RCurve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxR_curve.png)
+![RCurve](./images/BoxR_curve.png)
 *Figure 5: Recall-Confidence Curve. The decline in recall at higher thresholds is compensated by the multi-stage association logic of ByteTrack.*
 
 ### 3) Tracking Results
@@ -85,10 +85,12 @@ The tracking performance for Experiment 10 was evaluated using the standard MOTC
 | **FN** | 44,028 | False Negatives |
 
 
+
 The configuration achieved a MOTA of 40.4% and an IDF1 of 51.7%. Notably, the inclusion of Camera Motion Compensation and ByteTrack logic resulted in a relatively low number of ID switches (276) compared to baseline methods evaluated in preliminary studies. The high precision (82.7%) suggests that the detector and the association logic effectively filter out background noise. The recall of 51.4% indicates that the interpolation and low-confidence matching successfully recovered a significant portion of pedestrian trajectories that would otherwise be lost due to occlusion.
 
 More detailed table (per video) can be seen below:
 
+*Table II: Tracking performance per video in subset of MOT17 dataset*
 
 | Sequence | IDF1 | IDP | IDR | Rcll | Prcn | GT | MT | PT | ML | FP | FN | IDs | FM | MOTA | MOTP | IDt | IDa | IDm |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
