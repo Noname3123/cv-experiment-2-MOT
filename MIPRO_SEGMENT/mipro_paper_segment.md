@@ -23,10 +23,9 @@ This section documents the experimental evaluation of the proposed tracking pipe
 ### 1) Experimental Setup and Implementation
 The first configuration (Experiment 10) represents the proposed robust tracking pipeline. The system integrates a YOLO11x object detector with an enhanced OC-SORT tracker. The input image resolution was set to $1280 \times 1280$ pixels.
 
-**Detector Implementation:**
 We utilized the YOLO11x model as a detector, pre-trained on the COCO dataset. To adapt the MOT17 dataset for YOLO training and validation, we converted the ground truth annotations from the standard MOT format `[frame, id, left, top, width, height]` to the YOLO format `[class, x_center, y_center, width, height]`, normalized by image dimensions. Only entries belonging to the 'Pedestrian' class (Class ID 1 in MOT17) were used to perform a single-class testing of the model.
 
-**Tracker Implementation:**
+
 The tracking core is based on the Observation-Centric SORT (OC-SORT) algorithm, which uses a Kalman Filter to estimate object state. We augmented the baseline implementation with three critical components to address the challenges of dynamic urban scenes:
 
 1.  **Camera Motion Compensation (CMC):** To decouple ego-motion (eg. dashboard cameras) from pedestrian motion, we implemented a CMC module using the Lucas-Kanade optical flow method. Features are tracked between consecutive frames to estimate an affine transformation matrix (translation, rotation, and scale). This transformation is applied to the Kalman Filter's state vector (position and velocity) before the prediction step, ensuring that the motion model accounts for the camera's movement.
@@ -48,9 +47,25 @@ The performance of the YOLO11x detector was validated on the prepared subset of 
 ![Precision-Recall Curve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxPR_curve.png)
 *Figure 2: Precision-Recall Curve demonstrating the detector's trade-off between false positives and false negatives.*
 
-As indicated by the validation artifacts in Figure 1 and Figure 2, the detector achieves a robust balance between precision and recall. The high true positive rate is crucial for the subsequent tracking stage, as the OC-SORT algorithm relies heavily on the quality of observations to correct its momentum-based predictions. #TODO: check this
+As indicated by the validation artifacts in Figure 1 and Figure 2, the detector achieves an acceptable balance between precision and recall. The high true positive rate is crucial for the subsequent tracking stage, as the OC-SORT algorithm relies heavily on the quality of observations to correct its momentum-based predictions. 
 
-#TODO: also addF1 curve, P curve and R cure
+Additional details can be seen by analysing the model's F1, P and R curves.
+
+Figure 3 depicts the F1-Confidence curve, illustrating the harmonic mean of precision and recall across varying confidence thresholds. The curve exhibits a stable plateau, indicating that the detector's performance is robust to threshold variations. The peak F1 score suggests an optimal trade-off point, which informs the selection of the high-confidence threshold ($0.5$) used in our tracking experiments. This ensures that the primary tracking associations are grounded in high-quality detections, while the subsequent association stages can exploit the higher recall available at lower confidence levels.
+
+![F1 Curve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxF1_curve.png)
+*Figure 3: F1-Confidence Curve. The curve demonstrates the optimal confidence threshold for maximizing the harmonic mean of precision and recall.*
+
+Figure 4 presents the Precision-Confidence curve, which characterizes the detector's reliability across the confidence spectrum. The curve demonstrates a monotonic increase in precision as the confidence threshold rises, indicating effective suppression of false positives at higher scores. At the operational threshold of $0.5$, the detector achieves a precision significantly above $0.8$, ensuring that the initial tracking candidates are of high quality. This high-precision regime is critical for the OC-SORT tracker, as it reduces the likelihood of initializing false tracks or incorrectly updating existing Kalman filters with background noise.
+
+![PCurve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxP_curve.png)
+
+*Figure 4: Precision-Confidence Curve. The monotonic rise in precision validates the model's ability to filter false positives at higher confidence levels.*
+
+Finally, Figure 5 illustrates the Recall-Confidence curve, showing the inverse relationship between confidence and recall. As the confidence threshold increases, the system naturally retrieves fewer ground truth objects. While a threshold of $0.5$ reduces the raw detection recall, this trade-off is mitigated by the ByteTrack algorithm, which specifically recovers low-confidence detections ($0.1$ to $0.5$) during the second association stage. This hierarchical approach allows the system to maintain high precision for track initialization while preserving recall for ongoing trajectories.
+
+![RCurve](../experiments/yolo11x_mot17_detection_singleclass_20260203_131201/BoxR_curve.png)
+*Figure 5: Recall-Confidence Curve. The decline in recall at higher thresholds is compensated by the multi-stage association logic of ByteTrack.*
 
 ### 3) Tracking Results
 The tracking performance for Experiment 10 was evaluated using the standard MOTChallenge metrics. The results are summarized in Table I.
@@ -69,11 +84,11 @@ The tracking performance for Experiment 10 was evaluated using the standard MOTC
 | **FP** | 9,744 | False Positives |
 | **FN** | 44,028 | False Negatives |
 
-**Analysis:**
+
 The configuration achieved a MOTA of 40.4% and an IDF1 of 51.7%. Notably, the inclusion of Camera Motion Compensation and ByteTrack logic resulted in a relatively low number of ID switches (276) compared to baseline methods evaluated in preliminary studies. The high precision (82.7%) suggests that the detector and the association logic effectively filter out background noise. The recall of 51.4% indicates that the interpolation and low-confidence matching successfully recovered a significant portion of pedestrian trajectories that would otherwise be lost due to occlusion.
 
 More detailed table (per video) can be seen below:
-#TODO:keep, or not
+
 
 | Sequence | IDF1 | IDP | IDR | Rcll | Prcn | GT | MT | PT | ML | FP | FN | IDs | FM | MOTA | MOTP | IDt | IDa | IDm |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -105,12 +120,12 @@ The results for Experiment 11 are presented in Table II, alongside the delta fro
 | **FP** | 8,610 | 9,744 | -1,134 |
 | **FN** | 44,871 | 44,028 | +843 |
 
-**Discussion:**
+
 Increasing the resolution to 1920px resulted in marginal gains in the primary composite metrics, with MOTA increasing by only 0.3% and IDF1 by 0.4%.
 
 Interestingly, the recall decreased slightly (from 51.4% to 50.5%), while precision improved (from 82.7% to 84.2%). This suggests that while the higher resolution allows the model to be more selective—reducing False Positives by over 1,000—it also leads to the suppression of some valid detections, possibly due to changes in the effective anchor scales or confidence calibration at higher resolutions. Furthermore, the number of ID switches increased from 276 to 306, indicating slightly less stable identity maintenance.
 
-**Conclusion on Configuration:**
+
 We conclude that the configuration from **Experiment 10 (1280px)** is superior for practical deployment. The marginal improvement in MOTA observed in Experiment 11 does not justify the significantly higher computational cost associated with processing $1920 \times 1920$ images (a $2.25\times$ increase in pixel count). The 1280px setup offers a better balance between recall and precision, maintains more stable identities (fewer ID switches), and operates with greater computational efficiency, making it the better choice for autonomous driving systems where real-time processing is a constraint.
 
 
@@ -141,10 +156,10 @@ The results on the MOT17 test set using public detections are summarized in Tabl
 ### 3) Analysis
 The proposed tracking pipeline demonstrates robust performance even when relying on external public detections, achieving a MOTA of 46.6% and an IDF1 of 51.0%.
 
-**Comparison with Custom Detector:**
+
 Interestingly, the MOTA score on the test set with public detections (46.6%) is higher than that achieved on the training set with the YOLO11x detector (40.4% in Experiment 10). This difference is largely driven by the significantly higher Precision (93.8% vs. 82.7%), indicating that the provided public detections—while potentially missing more objects (Recall 50.2%)—contain fewer false positives than our fine-tuned YOLO model.
 
-**Tracker Efficiency:**
+
 The tracker maintained a high processing speed of 31.08 Hz, confirming its suitability for real-time applications. The IDF1 score of 51.0% remains consistent with the custom detector experiments (51.7%), suggesting that the tracker's ability to maintain identity is stable regardless of the detection source. However, the absolute number of ID switches (1,692) is higher, likely due to the larger size and diversity of the test set compared to the validation subset used in previous experiments, as well as the inherent noise in older detectors like DPM.
 
 # III. CONCLUSION
