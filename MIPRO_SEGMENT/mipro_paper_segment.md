@@ -1,4 +1,20 @@
-# EXPERIMENTAL RESULTS AND ANALYSIS
+# I. INTRODUCTION
+
+Multiple Object Tracking (MOT) is a fundamental component of modern perception systems, particularly in the domain of autonomous driving and intelligent transporation systems, where reliable and temporally consistent tracking of pedestrians is essential for safe navigation and making decisions. Unlike single-frame object detection, MOT requires maintaining object identities across time under challenging real-world conditions such as frequent occlusions, illumination changes, viewpoint variations and camera motion. These challenges are especially pronounced in urban environments, where dense crowds and dynamic backgrounds significantly increase the complexity of the tracking task.
+
+To support standardized evaluation and fair comparison of tracking methods, the MOTChallenge benchmark has become the de facto reference in the research community. In this work, we focus on the MOT17 dataset, which provides a diverse set of urban video sequences annotated with pedestrian trajectories and accompanied by detections from multiple detectors. MOT17 enables evaluation under realistic conditions and reports performance using a rich set of metrics that capture both detection quality and identity preservation.
+
+Recent advances in MOT have shown that tracking-by-detection pipelines remain dominant, combining strong object detectors with increasingly sophisticated data association strategies. While deep learning has significantly improved detection accuracy, identity consistency remains a key challenge, particularly in scenarios involving partial occlusions and camera motion. As a result, modern trackers often integrate classical motion models with additional heuristics and post-processing steps to enhance robustness.
+
+Among contemporary tracking methods, OC-SORT (Observation-Centric SORT) has emerged as a promising approach by rethinking the role of the Kalman filter and emphasizing observation-driven updates. Unlike traditional SORT-based trackers, OC-SORT reduces reliance on motion prediction during ambiguous associations, which has been shown to improve robustness in crowded scenes. However, as with most MOT frameworks, its performance strongly depends on detector quality, association logic, and hyperparameter tuning.
+
+The goal of this paper is to conduct a systematic experimental evaluation of multiple tracking configurations on the MOT17 benchmark, with particular emphasis on OC-SORT-based pipelines. We analyze how different design choices—such as detector confidence thresholds, inference resolution, association strategies, interpolation, and camera motion compensation—affect overall tracking performance. In total, 18 experimental configurations were evaluated, ranging from baseline trackers to progressively enhanced systems.
+
+Performance is assessed using standard MOTChallenge metrics, including MOTA, IDF1, precision, recall, and identity switches. While MOTA provides an overall accuracy measure, IDF1 is of particular importance in this study, as it directly reflects the ability of a tracker to preserve object identities over time—an essential requirement for downstream autonomous driving applications.
+
+The experiments were designed in an incremental manner: starting from baseline configurations, individual components were introduced step by step to isolate their contribution to tracking performance. This approach enables a clear interpretation of results and provides practical insight into which mechanisms yield the most significant improvements under realistic constraints.
+
+# II. EXPERIMENTAL RESULTS AND ANALYSIS
 
 This section documents the experimental evaluation of the proposed tracking pipeline on the MOT17 benchmark. We focus on two primary configurations to assess the impact of input resolution and the effectiveness of the integrated tracking components.
 
@@ -130,3 +146,17 @@ Interestingly, the MOTA score on the test set with public detections (46.6%) is 
 
 **Tracker Efficiency:**
 The tracker maintained a high processing speed of 31.08 Hz, confirming its suitability for real-time applications. The IDF1 score of 51.0% remains consistent with the custom detector experiments (51.7%), suggesting that the tracker's ability to maintain identity is stable regardless of the detection source. However, the absolute number of ID switches (1,692) is higher, likely due to the larger size and diversity of the test set compared to the validation subset used in previous experiments, as well as the inherent noise in older detectors like DPM.
+
+# III. CONCLUSION
+
+In this paper, we presented a comprehensive experimental study of multiple object tracking pipelines evaluated on the MOT17 benchmark, with a particular focus on OC-SORT-based architectures. Through a series of controlled experiments, we analyzed the impact of detector configuration, data association strategies, camera motion compensation, and post-processing techniques on both tracking accuracy and identity consistency.
+
+The results demonstrate that OC-SORT, when combined with carefully selected enhancements, consistently outperforms baseline tracking approaches. While the baseline OC-SORT configuration already provides stable performance with relatively low numbers of false positives, its recall and identity consistency are limited. Significant improvements are achieved by integrating ByteTrack-style association, trajectory interpolation, and camera motion compensation, which together address the most common failure modes in crowded urban scenes.
+
+The best-performing configuration—based on YOLO11x detection, OC-SORT tracking, ByteTrack association logic, linear interpolation, and optical-flow-based camera motion compensation—achieved IDF1 values above 50% and MOTA above 40%, exceeding commonly reported reference baselines on MOT17. These results confirm that a hybrid approach combining classical motion models with targeted heuristics remains highly competitive, even when compared to more complex end-to-end learning-based solutions.
+
+A comparative evaluation of inference resolution revealed that increasing input resolution beyond 1280×1280 pixels yields only marginal gains in tracking metrics while substantially increasing computational cost. This finding highlights the importance of balancing accuracy and efficiency, particularly for real-time deployment scenarios such as autonomous driving systems.
+
+Despite the achieved improvements, several limitations remain. Identity switches still occur in prolonged occlusions and dense interactions, and recall remains constrained by detector performance in challenging lighting and scale conditions. Future work will therefore focus on improving re-identification robustness, exploring adaptive confidence thresholds, and investigating learning-based association modules that could further reduce identity fragmentation without sacrificing efficiency.
+
+Overall, the presented study provides practical insights into the design of robust MOT pipelines and demonstrates that well-engineered tracking-by-detection systems remain a strong and viable solution for real-world perception tasks.
