@@ -4,7 +4,8 @@ import logging
 import numpy as np
 import motmetrics as mm
 import optuna
-from optuna.samplers import TPESampler
+import random
+import math
 from datetime import datetime
 
 # Import configuration and tracker logic
@@ -15,14 +16,14 @@ import evaluate_tracker_cached as tracker_module
 
 # --- Configuration ---
 MOT17_PATH = "MOT17"
-STUDY_NAME = "ocsort_optimization_tpe"
+STUDY_NAME = "ocsort_optimization_sa"
 STORAGE_DIR = "optimization_results"
-N_TRIALS = 300  # Number of optimization trials
+N_TRIALS = 500  # Number of optimization trials
 
 # Setup Logging
 os.makedirs(STORAGE_DIR, exist_ok=True)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-log_file = os.path.join(STORAGE_DIR, f"optimization_{timestamp}.log")
+log_file = os.path.join(STORAGE_DIR, f"optimization_sa_{timestamp}.log")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -58,6 +59,62 @@ def get_validation_sequences(mot_path):
     
     return sorted(sequences)
 
+def get_random_params(search_space):
+    """Generates a random valid set of parameters."""
+    params = {}
+    for key, config in search_space.items():
+        if config["type"] == "float":
+            params[key] = random.uniform(config["low"], config["high"])
+        elif config["type"] == "int":
+            params[key] = random.randint(config["low"], config["high"])
+        elif config["type"] == "categorical":
+            params[key] = random.choice(config["choices"])
+    
+    # Enforce constraints
+    if params.get("CONFIDENCE_LOW") is not None and params.get("CONFIDENCE_THRESHOLD") is not None:
+        if params["CONFIDENCE_LOW"] >= params["CONFIDENCE_THRESHOLD"]:
+            params["CONFIDENCE_LOW"] = params["CONFIDENCE_THRESHOLD"] * 0.5
+    return params
+
+def perturb_params(current_params, search_space, temperature):
+    """Perturbs parameters to find a neighbor state."""
+    new_params = current_params.copy()
+    
+    # Select one parameter to change
+    key_to_change = random.choice(list(search_space.keys()))
+    config = search_space[key_to_change]
+    
+    # Perturbation magnitude scales with temperature
+    if config["type"] == "float":
+        span = config["high"] - config["low"]
+        sigma = span * 0.2 * max(temperature, 0.01)
+        delta = random.gauss(0, sigma)
+        new_val = new_params[key_to_change] + delta
+        new_params[key_to_change] = max(config["low"], min(config["high"], new_val))
+        
+    elif config["type"] == "int":
+        span = config["high"] - config["low"]
+        max_step = max(1, int(span * 0.2 * max(temperature, 0.01)))
+        delta = random.randint(-max_step, max_step)
+        new_val = new_params[key_to_change] + delta
+        new_params[key_to_change] = max(config["low"], min(config["high"], new_val))
+        
+    elif config["type"] == "categorical":
+        choices = config["choices"]
+        if len(choices) > 1:
+            others = [c for c in choices if c != new_params[key_to_change]]
+            new_params[key_to_change] = random.choice(others)
+
+    # Enforce constraints
+    if new_params.get("CONFIDENCE_LOW") is not None and new_params.get("CONFIDENCE_THRESHOLD") is not None:
+        if new_params["CONFIDENCE_LOW"] >= new_params["CONFIDENCE_THRESHOLD"]:
+            # Fix by lowering low threshold
+            new_params["CONFIDENCE_LOW"] = new_params["CONFIDENCE_THRESHOLD"] - 0.01
+            if new_params["CONFIDENCE_LOW"] < search_space["CONFIDENCE_LOW"]["low"]:
+                new_params["CONFIDENCE_LOW"] = search_space["CONFIDENCE_LOW"]["low"]
+
+    return new_params
+
 def objective(trial):
     # 1. Sample Hyperparameters based on config
     params = {}
@@ -90,7 +147,7 @@ def objective(trial):
         return 0.0
 
     # Create a temp dir for this trial's outputs to avoid race conditions/clutter
-    trial_output_dir = os.path.join(STORAGE_DIR, f"trial_{trial.number}")
+    trial_output_dir = os.path.join(STORAGE_DIR, f"trial_sa_{trial.number}")
     os.makedirs(trial_output_dir, exist_ok=True)
 
     for seq_name, det_path, gt_path in val_sequences:
@@ -131,7 +188,7 @@ def objective(trial):
     return score
 
 def main():
-    logger.info("Starting Hyperparameter Optimization (Multivariate TPE)...")
+    logger.info("Starting Hyperparameter Optimization (Manual Simulated Annealing)...")
     
     # Check if we have data
     mot_path = MOT17_PATH
@@ -144,12 +201,57 @@ def main():
         logger.error("Please run generate_yolo_detections.py first to create .npy files for sequences that have Ground Truth.")
         return
 
-    # Create Study
-    sampler = TPESampler(multivariate=True)
-    study = optuna.create_study(direction="maximize", study_name=STUDY_NAME, sampler=sampler)
+    # Create Study (Sampler doesn't matter as we manually enqueue trials)
+    study = optuna.create_study(direction="maximize", study_name=STUDY_NAME)
     
-    # Run Optimization
-    study.optimize(objective, n_trials=N_TRIALS)
+    # --- Simulated Annealing Loop ---
+    current_params = get_random_params(SEARCH_SPACE)
+    current_score = -1.0
+    best_score = -1.0
+    best_params = current_params
+
+    # Cooling Schedule
+    T_initial = 1.0
+    T_min = 0.001
+    # Calculate alpha to reach T_min at the end of N_TRIALS
+    alpha = math.exp(math.log(T_min / T_initial) / N_TRIALS)
+    T = T_initial
+
+    for i in range(N_TRIALS):
+        # 1. Enqueue the parameters we want to test
+        study.enqueue_trial(current_params)
+        
+        # 2. Run the trial
+        trial = study.ask()
+        try:
+            new_score = objective(trial)
+            study.tell(trial, new_score)
+        except optuna.TrialPruned:
+            study.tell(trial, state=optuna.trial.TrialState.PRUNED)
+            new_score = -1.0
+        except Exception as e:
+            logger.error(f"Trial {i} failed: {e}")
+            study.tell(trial, state=optuna.trial.TrialState.FAIL)
+            new_score = -1.0
+
+        # 3. Acceptance Probability (Metropolis Criterion)
+        delta = new_score - current_score
+        
+        if delta > 0:
+            accept = True
+            best_score = max(best_score, new_score)
+            best_params = current_params
+        else:
+            # Scale delta for probability calculation (scores are roughly 0.0-1.0)
+            probability = math.exp(delta / (T * 0.1))
+            accept = random.random() < probability
+        
+        # 4. Update State & Perturb for next iteration
+        if accept and new_score != -1.0:
+            current_score = new_score
+            
+        current_params = perturb_params(current_params, SEARCH_SPACE, T)
+        T *= alpha
     
     logger.info("Optimization Finished.")
     logger.info(f"Best Trial: {study.best_trial.number}")
