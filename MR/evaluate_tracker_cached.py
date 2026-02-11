@@ -372,7 +372,19 @@ def interpolate_tracks(results, max_gap=20):
 
 # --- Main Processing Logic ---
 
-def process_sequence(seq_name, all_detections, output_path, mot_path):
+def process_sequence(seq_name, all_detections, output_path, mot_path, params=None):
+    # Use provided params or fall back to global defaults
+    if params is None:
+        params = {
+            "CONFIDENCE_THRESHOLD": CONFIDENCE_THRESHOLD,
+            "CONFIDENCE_LOW": CONFIDENCE_LOW,
+            "IOU_THRESHOLD": IOU_THRESHOLD,
+            "MAX_AGE": MAX_AGE,
+            "MIN_HITS": MIN_HITS,
+            "INERTIA": INERTIA,
+            "DELTA_T": DELTA_T,
+            "MAX_GAP": MAX_GAP
+        }
     print(f"Processing sequence: {seq_name}")
     
     # Locate sequence directory (check  test)
@@ -390,13 +402,13 @@ def process_sequence(seq_name, all_detections, output_path, mot_path):
     image_files = sorted([f for f in os.listdir(seq_dir) if f.endswith('.jpg')])
     
     tracker = OCSort(
-        det_thresh=CONFIDENCE_THRESHOLD,
-        det_thresh_low=CONFIDENCE_LOW,
-        iou_threshold=IOU_THRESHOLD,
-        max_age=MAX_AGE,
-        min_hits=MIN_HITS,
-        delta_t=DELTA_T,
-        inertia=INERTIA
+        det_thresh=params["CONFIDENCE_THRESHOLD"],
+        det_thresh_low=params["CONFIDENCE_LOW"],
+        iou_threshold=params["IOU_THRESHOLD"],
+        max_age=params["MAX_AGE"],
+        min_hits=params["MIN_HITS"],
+        delta_t=params["DELTA_T"],
+        inertia=params["INERTIA"]
     )
 
     results_file = os.path.join(output_path, f"{seq_name}.txt")
@@ -439,7 +451,7 @@ def process_sequence(seq_name, all_detections, output_path, mot_path):
             raw_results.append([frame_idx, int(track_id), x1, y1, w, h])
 
     # 5. Interpolate
-    final_results = interpolate_tracks(raw_results, max_gap=MAX_GAP)
+    final_results = interpolate_tracks(raw_results, max_gap=params["MAX_GAP"])
 
     # 6. Write to File (Required for motmetrics)
     with open(results_file, 'w') as f_out:
