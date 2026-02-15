@@ -1,0 +1,21 @@
+Experiment Log - 20260215_185738
+========================================
+Model: yolo11l.pt
+Tracker: DeepSORT (deep-sort-realtime)
+Hyperparameters:
+  CONFIDENCE_THRESHOLD: 0.5
+  INFERENCE_SIZE: 1920
+  MAX_AGE: 60
+  MIN_HITS: 3
+  POST_PROCESSING: Linear Interpolation (max_gap=20)
+  CMC: Calculated but NOT applied (Library limitation)
+
+Results:
+                IDF1   IDP   IDR  Rcll  Prcn  GT  MT  PT  ML    FP    FN IDs    FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-DPM   33.4% 43.1% 27.3% 42.9% 67.7%  62  10  24  28  3798 10607 129   178 21.8% 0.215 130  23  24
+MOT17-02-FRCNN 33.4% 43.1% 27.3% 42.9% 67.7%  62  10  24  28  3798 10607 129   178 21.8% 0.215 130  23  24
+MOT17-02-SDP   33.4% 43.1% 27.3% 42.9% 67.7%  62  10  24  28  3798 10607 129   178 21.8% 0.215 130  23  24
+MOT17-13-DPM   37.5% 38.1% 36.8% 50.1% 51.9% 110  24  47  39  5406  5812  83   182  2.9% 0.240 102  21  48
+MOT17-13-FRCNN 37.5% 38.1% 36.8% 50.1% 51.9% 110  24  47  39  5406  5812  83   182  2.9% 0.240 102  21  48
+MOT17-13-SDP   37.5% 38.1% 36.8% 50.1% 51.9% 110  24  47  39  5406  5812  83   182  2.9% 0.240 102  21  48
+OVERALL        35.1% 40.7% 31.0% 45.7% 60.0% 516 102 213 201 27612 49257 636  1080 14.5% 0.225 696 132 216

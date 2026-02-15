@@ -1,0 +1,21 @@
+Experiment Log - 20260215_190433
+========================================
+Model: yolo11x.pt
+Tracker: Norfair
+Hyperparameters:
+  CONFIDENCE_THRESHOLD: 0.4
+  DISTANCE_THRESHOLD: 30
+  HIT_INERTIA_MIN: 3
+  HIT_INERTIA_MAX: 6
+
+Results:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT  PT  ML   FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-DPM   27.4% 61.7% 17.6% 25.1% 88.2%  62  8  13  41  624 13912  57   61 21.5% 0.155   4  55   2
+MOT17-02-FRCNN 27.4% 61.7% 17.6% 25.1% 88.2%  62  8  13  41  624 13912  57   61 21.5% 0.155   4  55   2
+MOT17-02-SDP   27.4% 61.7% 17.6% 25.1% 88.2%  62  8  13  41  624 13912  57   61 21.5% 0.155   4  55   2
+MOT17-13-DPM   34.4% 70.1% 22.8% 27.4% 84.1% 110  8  30  72  602  8457  58  128 21.7% 0.201  35  35  15
+MOT17-13-FRCNN 34.4% 70.1% 22.8% 27.4% 84.1% 110  8  30  72  602  8457  58  128 21.7% 0.201  35  35  15
+MOT17-13-SDP   34.4% 70.1% 22.8% 27.4% 84.1% 110  8  30  72  602  8457  58  128 21.7% 0.201  35  35  15
+OVERALL        30.1% 65.2% 19.6% 26.0% 86.5% 516 48 129 339 3678 67107 345  567 21.5% 0.174 117 270  51
+
+Note: HOTA metric requires the official TrackEval library.
