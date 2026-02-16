@@ -1,4 +1,5 @@
 import os
+import time
 import datetime
 import cv2
 import numpy as np
@@ -528,6 +529,7 @@ def process_sequence(seq_name, model, output_path):
     raw_results = []
     prev_gray = None
     
+    start_time = time.time()
     for frame_idx, img_file in enumerate(image_files, start=1):
         img_path = os.path.join(seq_dir, img_file)
         frame = cv2.imread(img_path)
@@ -564,6 +566,9 @@ def process_sequence(seq_name, model, output_path):
             w = x2 - x1
             h = y2 - y1
             raw_results.append([frame_idx, int(track_id), x1, y1, w, h])
+            
+    end_time = time.time()
+    fps = len(image_files) / (end_time - start_time) if (end_time - start_time) > 0 else 0
 
     # Interpolate Missing Frames
     interpolated_results = interpolate_tracks(raw_results, max_gap=20)
@@ -576,9 +581,43 @@ def process_sequence(seq_name, model, output_path):
             line = f"{frame_idx},{track_id},{x1:.2f},{y1:.2f},{w:.2f},{h:.2f},1.00,-1,-1,-1\n"
             f_out.write(line)
 
-    print(f"Finished {seq_name}. Results saved to {results_file}")
+    print(f"Finished {seq_name}. Results saved to {results_file}. FPS: {fps:.2f}")
+
+    # --- Generate Video ---
+    video_path = os.path.join(output_path, f"{seq_name}.mp4")
+    print(f"Generating video for {seq_name}...")
+    
+    # Map results to frames for O(1) lookup
+    frame_results = {}
+    for row in interpolated_results:
+        f_idx = int(row[0])
+        if f_idx not in frame_results:
+            frame_results[f_idx] = []
+        frame_results[f_idx].append(row)
+
+    if len(image_files) > 0:
+        first_img = cv2.imread(os.path.join(seq_dir, image_files[0]))
+        h, w = first_img.shape[:2]
+        out = cv2.VideoWriter(video_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (w, h))
+
+        for i, img_file in enumerate(image_files):
+            frame = cv2.imread(os.path.join(seq_dir, img_file))
+            f_idx = i + 1
+            if f_idx in frame_results:
+                for row in frame_results[f_idx]:
+                    # row: [frame, id, x1, y1, w, h]
+                    tid = int(row[1])
+                    x1, y1, w_box, h_box = row[2], row[3], row[4], row[5]
+                    np.random.seed(tid)
+                    color = np.random.randint(0, 255, 3).tolist()
+                    cv2.rectangle(frame, (int(x1), int(y1)), (int(x1+w_box), int(y1+h_box)), color, 2)
+                    cv2.putText(frame, str(tid), (int(x1), int(y1)-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+            out.write(frame)
+        out.release()
+        print(f"Video saved to {video_path}")
+
     gt_file = os.path.join(seq_dir, '..', 'gt', 'gt.txt')
-    return results_file, gt_file
+    return results_file, gt_file, fps
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -592,15 +631,19 @@ def main():
     
     print(f"Found {len(sequences)} sequences: {sequences}")
 
-    accs, names = [], []
+    accs, names, fps_list = [], [], []
     for seq in sequences:
-        res_file, gt_file = process_sequence(seq, model, OUTPUT_DIR)
+        res_file, gt_file, fps = process_sequence(seq, model, OUTPUT_DIR)
+        fps_list.append(fps)
         if gt_file and os.path.exists(gt_file):
             gt = mm.io.loadtxt(gt_file, fmt="mot15-2D", min_confidence=1)
             ts = mm.io.loadtxt(res_file, fmt="mot15-2D")
             acc = mm.utils.compare_to_groundtruth(gt, ts, 'iou', distth=0.5)
             accs.append(acc)
             names.append(seq)
+
+    avg_fps = sum(fps_list) / len(fps_list) if fps_list else 0
+    print(f"Average FPS across all sequences: {avg_fps:.2f}")
 
     if accs:
         print("\nComputing Metrics on Test Set...")
@@ -628,6 +671,7 @@ def main():
             f.write(f"  INERTIA: {INERTIA}\n")
             f.write(f"  POST_PROCESSING: Linear Interpolation (max_gap=20)\n")
             f.write(f"  CMC: Optical Flow (Affine)\n")
+            f.write(f"  AVERAGE FPS: {avg_fps:.2f}\n")
             f.write("\nResults:\n")
             f.write(str_summary)
         print(f"\nExperiment results saved to {log_file}")
