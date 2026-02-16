@@ -5,6 +5,7 @@ import cv2
 import datetime
 import numpy as np
 from ultralytics import YOLO
+import matplotlib.pyplot as plt
 
 # --- Configuration ---
 MOT17_PATH = "MOT17"
@@ -108,6 +109,107 @@ def convert_mot_to_yolo():
         
     print("Data preparation complete.")
 
+# --- Custom Plotting ---
+
+def plot_custom_curves(metrics, save_dir):
+    """
+    Generates custom plots for P, R, F1, and PR curves for the 'person' class only.
+    Legend is placed below the plot.
+    """
+    os.makedirs(save_dir, exist_ok=True)
+    
+    # metrics.box.p/r/f1 are shape (nc, 1000)
+    # We assume single class evaluation (Person) or we take the first class
+    cls_idx = 0
+    cls_name = 'Person'
+    
+    # Attempt to retrieve curve data
+    p_curve_raw, r_curve_raw, f1_curve_raw = None, None, None
+
+    # Priority 1: metrics.box.curves
+    raw_curves = getattr(metrics.box, 'curves', [])
+    if raw_curves and len(raw_curves) >= 3:
+        print("Using metrics.box.curves for plotting data.")
+        p_curve_raw, r_curve_raw, f1_curve_raw = raw_curves[:3]
+    
+    # Priority 2: metrics.box.{p,r,f1}_curve attributes
+    if p_curve_raw is None:
+        p_curve_raw = getattr(metrics.box, 'p_curve', None)
+        r_curve_raw = getattr(metrics.box, 'r_curve', None)
+        f1_curve_raw = getattr(metrics.box, 'f1_curve', None)
+        if p_curve_raw is not None:
+            print("Using metrics.box.{p,r,f1}_curve attributes.")
+
+    # Priority 3: Fallback to scalars (will likely result in skipped plots)
+    if p_curve_raw is None:
+        print("Warning: Curve data not found. Using scalar attributes.")
+        p_curve_raw, r_curve_raw, f1_curve_raw = metrics.box.p, metrics.box.r, metrics.box.f1
+
+    def get_metric_array(arr, c_idx):
+        if not isinstance(arr, np.ndarray):
+            arr = np.array(arr)
+        if arr.size <= 1:
+            return arr
+        if arr.ndim == 1:
+            return arr
+        if arr.shape[0] > arr.shape[1]: 
+            return arr[:, c_idx]
+        else:
+            return arr[c_idx]
+
+    f1_curve = get_metric_array(f1_curve_raw, cls_idx)
+    p_curve = get_metric_array(p_curve_raw, cls_idx)
+    r_curve = get_metric_array(r_curve_raw, cls_idx)
+
+    # Define the curves to plot: (Data Array, Y-Label, Title, Filename, Label Suffix)
+    curves = [
+        (f1_curve, 'F1', 'F1-Confidence Curve', 'Custom_BoxF1_curve.png', f'Max: {f1_curve.max():.2f}'),
+        (p_curve, 'Precision', 'Precision-Confidence Curve', 'Custom_BoxP_curve.png', ''),
+        (r_curve, 'Recall', 'Recall-Confidence Curve', 'Custom_BoxR_curve.png', '')
+    ]
+
+    for data, ylabel, title, filename, label_suffix in curves:
+        if data.size < 2:
+            print(f"Skipping {filename}: Data size too small ({data.shape})")
+            continue
+            
+        fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+        # Dynamic x-axis based on data length
+        x = np.linspace(0, 1, len(data))
+        label = f'{cls_name} {label_suffix}'.strip()
+        ax.plot(x, data, linewidth=2, label=label, color='blue')
+        ax.set_xlabel('Confidence')
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1.05)
+        ax.grid(True, linestyle='--', alpha=0.5)
+        # Legend inside the plot
+        ax.legend(loc='best', fancybox=True, shadow=False, ncol=1)
+        plt.tight_layout()
+        fig.savefig(os.path.join(save_dir, filename), dpi=300)
+        plt.close(fig)
+
+    # PR Curve (P vs R)
+    if r_curve.size < 2 or p_curve.size < 2:
+        print("Skipping PR curve: Data size too small")
+        return
+        
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    ap50 = metrics.box.map50
+    ax.plot(r_curve, p_curve, linewidth=2, label=f'{cls_name} mAP@0.5: {ap50:.3f}', color='blue')
+    ax.set_xlabel('Recall')
+    ax.set_ylabel('Precision')
+    ax.set_title('Precision-Recall Curve')
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1.05)
+    ax.grid(True, linestyle='--', alpha=0.5)
+    ax.legend(loc='best', fancybox=True, shadow=False, ncol=1)
+    plt.tight_layout()
+    fig.savefig(os.path.join(save_dir, 'Custom_BoxPR_curve.png'), dpi=300)
+    plt.close(fig)
+    print("Custom curves saved.")
+
 # --- Evaluation ---
 
 def main():
@@ -186,6 +288,9 @@ def main():
     print(f"Recall:    {metrics.box.mr:.4f}")
     print("="*40)
     print(f"Detailed results saved to: {os.path.join(EXPERIMENT_DIR, run_name)}")
+    
+    # Generate custom plots
+    plot_custom_curves(metrics, os.path.join(EXPERIMENT_DIR, run_name))
 
 if __name__ == "__main__":
     main()
