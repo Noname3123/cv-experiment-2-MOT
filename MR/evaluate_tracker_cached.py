@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import motmetrics as mm
 import time
+from datetime import datetime
 
 # Dependencies for OC-SORT
 try:
@@ -18,16 +19,17 @@ except ImportError:
 # --- Configuration ---
 MOT17_PATH = "MOT17"
 OUTPUT_DIR = "tracking_results_cached"
+EXPERIMENT_DIR = "experiments"
 
 # Tracker Hyperparameters (Matching yolo_ocsort_high_res_bytetrack_interpolation_cmc.py)
-CONFIDENCE_THRESHOLD = 0.5    # High threshold for initializing tracks
-CONFIDENCE_LOW = 0.05         # Low threshold for maintaining tracks (ByteTrack)
-IOU_THRESHOLD = 0.3
-MAX_AGE = 60
-MIN_HITS = 3
-INERTIA = 0.2
-DELTA_T = 3
-MAX_GAP = 20                  # For interpolation
+CONFIDENCE_THRESHOLD = 0.4278448124692704    # High threshold for initializing tracks
+CONFIDENCE_LOW = 0.0976057549259764         # Low threshold for maintaining tracks (ByteTrack)
+IOU_THRESHOLD = 0.13078068699764064
+MAX_AGE = 117
+MIN_HITS = 5
+INERTIA = 0.31263094844622574
+DELTA_T = 4
+MAX_GAP = 36                  # For interpolation
 
 # --- Utilities ---
 
@@ -507,6 +509,31 @@ def main():
         summary = mh.compute_many(accs, metrics=mm.metrics.motchallenge_metrics, names=names, generate_overall=True)
         str_summary = mm.io.render_summary(summary, formatters=mh.formatters, namemap=mm.io.motchallenge_metric_names)
         print(str_summary)
+
+        # Save metrics and parameters to log file
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        exp_dir = os.path.join(script_dir, EXPERIMENT_DIR)
+        os.makedirs(exp_dir, exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_path = os.path.join(exp_dir, f"evaluation_log_{timestamp}.txt")
+
+        with open(log_path, "w") as f:
+            f.write(f"Evaluation Log - {timestamp}\n")
+            f.write("========================================\n")
+            f.write("Parameters:\n")
+            f.write(f"  CONFIDENCE_THRESHOLD: {CONFIDENCE_THRESHOLD}\n")
+            f.write(f"  CONFIDENCE_LOW: {CONFIDENCE_LOW}\n")
+            f.write(f"  IOU_THRESHOLD: {IOU_THRESHOLD}\n")
+            f.write(f"  MAX_AGE: {MAX_AGE}\n")
+            f.write(f"  MIN_HITS: {MIN_HITS}\n")
+            f.write(f"  INERTIA: {INERTIA}\n")
+            f.write(f"  DELTA_T: {DELTA_T}\n")
+            f.write(f"  MAX_GAP: {MAX_GAP}\n")
+            f.write("\nResults:\n")
+            f.write(str_summary)
+        
+        print(f"\nMetrics saved to {log_path}")
     else:
         print("No sequences with Ground Truth were processed.")
 
