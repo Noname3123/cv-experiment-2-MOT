@@ -26,7 +26,7 @@ MODEL_WEIGHTS = "yolo11x.pt"
 
 # OC-SORT Hyperparameters
 CONFIDENCE_THRESHOLD = 0.5    # Initial detection confidence threshold
-CONFIDENCE_LOW = 0.05         # Low threshold for maintaining tracks (ByteTrack)
+CONFIDENCE_LOW = 0.1         # Low threshold for maintaining tracks (ByteTrack)
 INFERENCE_SIZE = 1280
 IOU_THRESHOLD = 0.3
 MAX_AGE = 60                  # Tracking age

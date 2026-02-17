@@ -7,3 +7,6 @@ samurai/
 *jpg
 *png
 MOT17_*/
+*.7z
+*.tar.gz
+MR/optimization_results/trial_*/
