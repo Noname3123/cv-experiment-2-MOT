@@ -26,3 +26,11 @@
 ### CV implementation suggestion content
 
 "To address the concerns regarding dataset size and result significance, we adopted a rigorous 7-fold cross-validation protocol. For each fold, we performed a grid search on the training split (12 sequences) to optimize hyperparameters (confidence threshold and max age), and reported the performance on the unseen validation split (2 sequences). This protocol ensures that our reported metrics (MOTA Mean ± Std Dev) reflect the method's generalization capability without overfitting to specific test sequences."
+
+
+
+
+### ablation study:
+
+TABLE III - treba raspraviti s Ivasic dal moze ovako: napomeni da su promjene jednake kao i prikazane na tablici iznad (table II, velika tablica s modelima):
+- add results of OC-sort + bytetrack logic -> YOLO11x+ ByteTrack I YOLO11x + OC_SORT+ Bytetrack imaju isti metrics
