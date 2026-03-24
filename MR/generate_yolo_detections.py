@@ -7,16 +7,16 @@ from ultralytics import YOLO
 MOT17_PATH = "MOT17"
 MODEL_WEIGHTS = "yolo11x.pt"
 INFERENCE_SIZE = 1280
-CONF_THRESHOLD = 0.01  # Low threshold to allow flexibility in optimization
+CONF_THRESHOLD = 0.001  # Low threshold to allow flexibility in optimization
 
-def process_sequence(seq_name, model, mot_path):
-    print(f"Processing sequence: {seq_name}")
+def process_sequence(seq_name, subset, model, mot_path):
+    print(f"Processing sequence: {seq_name} ({subset})")
     
     # Handle path if running from MR/ subdirectory
     if not os.path.exists(mot_path) and os.path.exists(os.path.join("..", mot_path)):
         mot_path = os.path.join("..", mot_path)
         
-    seq_dir = os.path.join(mot_path, "test", seq_name, "img1")
+    seq_dir = os.path.join(mot_path, subset, seq_name, "img1")
     if not os.path.exists(seq_dir):
         print(f"Sequence directory not found: {seq_dir}")
         return
@@ -47,7 +47,7 @@ def process_sequence(seq_name, model, mot_path):
     all_detections = np.array(all_detections)
     
     # Save in the sequence directory
-    save_dir = os.path.join(mot_path, "test", seq_name)
+    save_dir = os.path.join(mot_path, subset, seq_name)
     # Filename labeled with video name
     save_path = os.path.join(save_dir, f"{seq_name}_yolo_detections.npy")
     
@@ -63,16 +63,19 @@ def main():
     if not os.path.exists(mot_path) and os.path.exists(os.path.join("..", MOT17_PATH)):
         mot_path = os.path.join("..", MOT17_PATH)
     
-    test_path = os.path.join(mot_path, "test")
-    if not os.path.exists(test_path):
-        print(f"MOT17 test directory not found at {test_path}")
-        return
+    subsets = ["train", "test"]
 
-    sequences = sorted([d for d in os.listdir(test_path) if os.path.isdir(os.path.join(test_path, d))])
-    print(f"Found {len(sequences)} sequences: {sequences}")
+    for subset in subsets:
+        subset_path = os.path.join(mot_path, subset)
+        if not os.path.exists(subset_path):
+            print(f"MOT17 {subset} directory not found at {subset_path}")
+            continue
 
-    for seq in sequences:
-        process_sequence(seq, model, mot_path)
+        sequences = sorted([d for d in os.listdir(subset_path) if os.path.isdir(os.path.join(subset_path, d))])
+        print(f"Found {len(sequences)} sequences in {subset}: {sequences}")
+
+        for seq in sequences:
+            process_sequence(seq, subset, model, mot_path)
 
 if __name__ == "__main__":
     main()

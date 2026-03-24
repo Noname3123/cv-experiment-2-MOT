@@ -1,0 +1,35 @@
+Experiment Started: 20260324_130802
+Model: yolo11x.pt, Folds: 7
+Found 2 sequences with Ground Truth: ['MOT17-02-FRCNN', 'MOT17-13-FRCNN']
+Warning: Number of sequences (2) is less than K_FOLDS (7). Reducing folds.
+Grid Search Size: 1 combinations per fold.
+
+--- Starting Fold 1/2 ---
+Train Sequences: 1, Validation Sequences: 1
+Fold 1 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.312, IDF1=0.436, FPS=16.05
+Fold 1 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.312)
+Evaluating Validation Set for Fold 1...
+Fold 1 Validation Result: MOTA=0.550, IDF1=0.641
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT PT ML  FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-13-FRCNN 64.1% 80.7% 53.2% 60.6% 91.9% 110 36 51 23 620 4590  27  81 55.0% 0.223  30  18  23
+OVERALL        64.1% 80.7% 53.2% 60.6% 91.9% 110 36 51 23 620 4590  27  81 55.0% 0.223  30  18  23
+
+--- Starting Fold 2/2 ---
+Train Sequences: 1, Validation Sequences: 1
+Fold 2 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.550, IDF1=0.641, FPS=16.26
+Fold 2 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.550)
+Evaluating Validation Set for Fold 2...
+Fold 2 Validation Result: MOTA=0.312, IDF1=0.436
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-FRCNN 43.6% 58.2% 34.8% 45.7% 76.4% 62 10 28 24 2628 10086  65  118 31.2% 0.199  38  33   9
+OVERALL        43.6% 58.2% 34.8% 45.7% 76.4% 62 10 28 24 2628 10086  65  118 31.2% 0.199  38  33   9
+
+========================================
+Cross Validation (2-Fold) Completed.
+Overall MOTA: 0.4312 ± 0.1190
+Overall Average FPS: 14.74
+========================================

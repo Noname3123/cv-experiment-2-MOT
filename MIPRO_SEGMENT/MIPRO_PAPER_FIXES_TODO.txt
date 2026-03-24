@@ -1,0 +1,28 @@
+- TODO:
+
+
+
+-> spomeni da nije učeno na cijelom datasetu -> imaj označen ground truth -> finetune yolo (k-fold cross validation) + MOT tracking (napravi k-fold cross validation za finetuned YOLO)
+
+-> naštimaj algoritam tako da se uzme dio za k-fold (za finetune hiperparametara)
+
+
+-> HZ -> zamijeni s FPS => ispod spomeni hardverske zahtjeve, spomeni da je realtime negdje
+
+-> makni opis kako su labellani podaci (data impact)
+
+--> clarify whether precision and recall is per-frame and per-instance
+
+--> mention top current leaderboard for the MOT17 ( što je aktivno, kada otvoreno, koja je top metoda), stavi na početak u INTRO section
+
+--> objasni kratice
+
+--> flowchart za strukturu modela/pipeline
+
+--> ablacijska studija: napravi -> odvojeno testiraj svaku komponentu: treća tablica -> dodaj ablacijsku studiju => (bytetrack+oc_sort)
+
+
+
+### CV implementation suggestion content
+
+"To address the concerns regarding dataset size and result significance, we adopted a rigorous 7-fold cross-validation protocol. For each fold, we performed a grid search on the training split (12 sequences) to optimize hyperparameters (confidence threshold and max age), and reported the performance on the unseen validation split (2 sequences). This protocol ensures that our reported metrics (MOTA Mean ± Std Dev) reflect the method's generalization capability without overfitting to specific test sequences."
