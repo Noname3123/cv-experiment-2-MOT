@@ -761,10 +761,18 @@ def main():
         log_msg(f"Evaluating Validation Set for Fold {k+1}...")
         val_mota, val_idf1, val_fps, val_summary = evaluate_subset(val_seqs, model, best_params, OUTPUT_DIR)
         
+        # Extract additional metrics
+        val_rcll = val_summary.loc['OVERALL']['recall']
+        val_prcn = val_summary.loc['OVERALL']['precision']
+        val_ids = val_summary.loc['OVERALL']['num_switches']
+
         fold_results.append({
             'fold': k+1,
             'mota': val_mota,
             'idf1': val_idf1,
+            'rcll': val_rcll,
+            'prcn': val_prcn,
+            'ids': val_ids,
             'fps': val_fps,
             'params': best_params
         })
@@ -777,9 +785,26 @@ def main():
     log_msg(f"Cross Validation ({K_FOLDS_ACTUAL}-Fold) Completed.")
     avg_mota = np.mean([r['mota'] for r in fold_results])
     std_mota = np.std([r['mota'] for r in fold_results])
+    
+    avg_idf1 = np.mean([r['idf1'] for r in fold_results])
+    std_idf1 = np.std([r['idf1'] for r in fold_results])
+
+    avg_rcll = np.mean([r['rcll'] for r in fold_results])
+    std_rcll = np.std([r['rcll'] for r in fold_results])
+
+    avg_prcn = np.mean([r['prcn'] for r in fold_results])
+    std_prcn = np.std([r['prcn'] for r in fold_results])
+
+    avg_ids = np.mean([r['ids'] for r in fold_results])
+    std_ids = np.std([r['ids'] for r in fold_results])
+
     avg_fps = np.mean([r['fps'] for r in fold_results])
     
     log_msg(f"Overall MOTA: {avg_mota:.4f} ± {std_mota:.4f}")
+    log_msg(f"Overall IDF1: {avg_idf1:.4f} ± {std_idf1:.4f}")
+    log_msg(f"Overall Rcll: {avg_rcll:.4f} ± {std_rcll:.4f}")
+    log_msg(f"Overall Prcn: {avg_prcn:.4f} ± {std_prcn:.4f}")
+    log_msg(f"Overall IDs:  {avg_ids:.2f} ± {std_ids:.2f}")
     log_msg(f"Overall Average FPS: {avg_fps:.2f}")
     log_msg("========================================")
 
