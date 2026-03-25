@@ -1,0 +1,248 @@
+Experiment Started: 20260324_133408
+Model: yolo11x.pt, Folds: 7
+Found 7 sequences with Ground Truth: ['MOT17-04-FRCNN', 'MOT17-05-FRCNN', 'MOT17-09-FRCNN', 'MOT17-10-FRCNN', 'MOT17-11-FRCNN', 'MOT17-02-FRCNN', 'MOT17-13-FRCNN']
+Grid Search Size: 12 combinations per fold.
+
+--- Starting Fold 1/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 1 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.570, FPS=8.65
+Fold 1 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.444, IDF1=0.571, FPS=8.93
+Fold 1 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.570, FPS=8.93
+Fold 1 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.444, IDF1=0.571, FPS=8.91
+Fold 1 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.571, FPS=8.89
+Fold 1 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.573, FPS=8.88
+Fold 1 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.571, FPS=8.88
+Fold 1 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.573, FPS=8.81
+Fold 1 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.436, IDF1=0.558, FPS=8.86
+Fold 1 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.434, IDF1=0.560, FPS=8.82
+Fold 1 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.436, IDF1=0.558, FPS=8.87
+Fold 1 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.434, IDF1=0.560, FPS=8.88
+Fold 1 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.445)
+Evaluating Validation Set for Fold 1...
+Fold 1 Validation Result: MOTA=0.396, IDF1=0.568
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT PT ML   FP   FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-05-FRCNN 56.8% 59.6% 54.2% 65.7% 72.2% 133 28 84 21 1747 2370  60  113 39.6% 0.263  42  36  23
+OVERALL        56.8% 59.6% 54.2% 65.7% 72.2% 133 28 84 21 1747 2370  60  113 39.6% 0.263  42  36  23
+
+--- Starting Fold 2/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 2 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.435, IDF1=0.570, FPS=15.06
+Fold 2 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.435, IDF1=0.570, FPS=14.75
+Fold 2 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.435, IDF1=0.570, FPS=14.94
+Fold 2 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.435, IDF1=0.570, FPS=14.90
+Fold 2 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.436, IDF1=0.572, FPS=14.96
+Fold 2 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.573, FPS=14.86
+Fold 2 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.436, IDF1=0.572, FPS=14.63
+Fold 2 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.573, FPS=14.72
+Fold 2 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.426, IDF1=0.558, FPS=14.97
+Fold 2 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.423, IDF1=0.559, FPS=14.76
+Fold 2 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.426, IDF1=0.558, FPS=15.03
+Fold 2 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.423, IDF1=0.559, FPS=14.88
+Fold 2 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.436)
+Evaluating Validation Set for Fold 2...
+Fold 2 Validation Result: MOTA=0.491, IDF1=0.562
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-10-FRCNN 56.2% 59.8% 53.1% 69.1% 77.9% 57 21 31  5 2512 3965  64  214 49.1% 0.240  35  37  10
+OVERALL        56.2% 59.8% 53.1% 69.1% 77.9% 57 21 31  5 2512 3965  64  214 49.1% 0.240  35  37  10
+
+--- Starting Fold 3/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 3 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.447, IDF1=0.574, FPS=14.90
+Fold 3 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.447, IDF1=0.574, FPS=14.64
+Fold 3 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.447, IDF1=0.574, FPS=14.96
+Fold 3 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.447, IDF1=0.574, FPS=14.75
+Fold 3 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.574, FPS=14.95
+Fold 3 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.576, FPS=14.61
+Fold 3 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.574, FPS=15.01
+Fold 3 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.576, FPS=14.82
+Fold 3 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.560, FPS=15.03
+Fold 3 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.431, IDF1=0.562, FPS=14.96
+Fold 3 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.560, FPS=15.09
+Fold 3 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.431, IDF1=0.562, FPS=15.10
+Fold 3 Best Params: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.447)
+Evaluating Validation Set for Fold 3...
+Fold 3 Validation Result: MOTA=0.375, IDF1=0.532
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-11-FRCNN 53.2% 53.7% 52.8% 68.0% 69.2% 75 30 16 29 2853 3019  24  47 37.5% 0.167   9  18   3
+OVERALL        53.2% 53.7% 52.8% 68.0% 69.2% 75 30 16 29 2853 3019  24  47 37.5% 0.167   9  18   3
+
+--- Starting Fold 4/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 4 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.573, FPS=15.20
+Fold 4 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.575, FPS=14.77
+Fold 4 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.573, FPS=15.05
+Fold 4 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.445, IDF1=0.575, FPS=15.02
+Fold 4 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.444, IDF1=0.573, FPS=15.25
+Fold 4 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.575, FPS=15.08
+Fold 4 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.444, IDF1=0.573, FPS=15.35
+Fold 4 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.575, FPS=15.06
+Fold 4 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.560, FPS=15.23
+Fold 4 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.431, IDF1=0.562, FPS=15.04
+Fold 4 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.560, FPS=15.07
+Fold 4 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.431, IDF1=0.562, FPS=15.10
+Fold 4 Best Params: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.445)
+Evaluating Validation Set for Fold 4...
+Fold 4 Validation Result: MOTA=0.354, IDF1=0.520
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-09-FRCNN 52.0% 48.0% 56.7% 77.1% 65.3% 26 15 10  1 2182 1219  39  41 35.4% 0.187  17  26   4
+OVERALL        52.0% 48.0% 56.7% 77.1% 65.3% 26 15 10  1 2182 1219  39  41 35.4% 0.187  17  26   4
+
+--- Starting Fold 5/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 5 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.562, FPS=15.21
+Fold 5 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.427, IDF1=0.563, FPS=14.99
+Fold 5 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.562, FPS=15.17
+Fold 5 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.427, IDF1=0.563, FPS=15.05
+Fold 5 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.429, IDF1=0.563, FPS=15.36
+Fold 5 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.427, IDF1=0.565, FPS=15.10
+Fold 5 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.429, IDF1=0.563, FPS=15.37
+Fold 5 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.427, IDF1=0.565, FPS=15.34
+Fold 5 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.553, FPS=15.34
+Fold 5 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.425, IDF1=0.556, FPS=15.28
+Fold 5 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.553, FPS=15.51
+Fold 5 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.425, IDF1=0.556, FPS=15.59
+Fold 5 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.429)
+Evaluating Validation Set for Fold 5...
+Fold 5 Validation Result: MOTA=0.550, IDF1=0.644
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT PT ML  FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-13-FRCNN 64.4% 81.2% 53.4% 60.5% 92.0% 110 36 51 23 614 4594  28  80 55.0% 0.223  29  19  21
+OVERALL        64.4% 81.2% 53.4% 60.5% 92.0% 110 36 51 23 614 4594  28  80 55.0% 0.223  29  19  21
+
+--- Starting Fold 6/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 6 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.410, IDF1=0.534, FPS=15.41
+Fold 6 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.408, IDF1=0.533, FPS=15.30
+Fold 6 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.410, IDF1=0.534, FPS=15.47
+Fold 6 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.408, IDF1=0.533, FPS=15.28
+Fold 6 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.421, IDF1=0.537, FPS=15.61
+Fold 6 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.420, IDF1=0.538, FPS=15.62
+Fold 6 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.421, IDF1=0.537, FPS=15.45
+Fold 6 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.420, IDF1=0.538, FPS=15.29
+Fold 6 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.539, FPS=15.57
+Fold 6 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.429, IDF1=0.535, FPS=15.57
+Fold 6 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.428, IDF1=0.539, FPS=15.58
+Fold 6 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.429, IDF1=0.535, FPS=15.41
+Fold 6 Best Params: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.429)
+Evaluating Validation Set for Fold 6...
+Fold 6 Validation Result: MOTA=0.436, IDF1=0.598
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-04-FRCNN 59.8% 78.8% 48.2% 52.4% 85.7% 83 24 24 35 4155 22636  21  108 43.6% 0.144  10  15   4
+OVERALL        59.8% 78.8% 48.2% 52.4% 85.7% 83 24 24 35 4155 22636  21  108 43.6% 0.144  10  15   4
+
+--- Starting Fold 7/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 7 - Testing Grid Config 1/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.468, IDF1=0.596, FPS=15.44
+Fold 7 - Testing Grid Config 2/12: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.467, IDF1=0.596, FPS=15.41
+Fold 7 - Testing Grid Config 3/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.468, IDF1=0.596, FPS=15.44
+Fold 7 - Testing Grid Config 4/12: {'det_thresh': 0.4, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.467, IDF1=0.596, FPS=15.41
+Fold 7 - Testing Grid Config 5/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.467, IDF1=0.596, FPS=15.67
+Fold 7 - Testing Grid Config 6/12: {'det_thresh': 0.5, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.465, IDF1=0.597, FPS=15.39
+Fold 7 - Testing Grid Config 7/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.467, IDF1=0.596, FPS=15.65
+Fold 7 - Testing Grid Config 8/12: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.465, IDF1=0.597, FPS=15.36
+Fold 7 - Testing Grid Config 9/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.455, IDF1=0.579, FPS=15.57
+Fold 7 - Testing Grid Config 10/12: {'det_thresh': 0.6, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.452, IDF1=0.582, FPS=15.62
+Fold 7 - Testing Grid Config 11/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.455, IDF1=0.579, FPS=15.65
+Fold 7 - Testing Grid Config 12/12: {'det_thresh': 0.6, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.452, IDF1=0.582, FPS=15.54
+Fold 7 Best Params: {'det_thresh': 0.4, 'det_thresh_low': 0.05, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 30, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.468)
+Evaluating Validation Set for Fold 7...
+Fold 7 Validation Result: MOTA=0.307, IDF1=0.424
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-FRCNN 42.4% 55.1% 34.5% 46.8% 74.8% 62  9 30 23 2925 9881  75  120 30.7% 0.202  23  54   3
+OVERALL        42.4% 55.1% 34.5% 46.8% 74.8% 62  9 30 23 2925 9881  75  120 30.7% 0.202  23  54   3
+
+========================================
+Cross Validation (7-Fold) Completed.
+Overall MOTA: 0.4156 ± 0.0773
+Overall Average FPS: 12.87
+========================================
