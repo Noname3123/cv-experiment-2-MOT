@@ -1,0 +1,98 @@
+Experiment Started: 20260325_113341
+Model: yolo11x.pt, Folds: 7
+Found 7 sequences with Ground Truth: ['MOT17-04-FRCNN', 'MOT17-05-FRCNN', 'MOT17-09-FRCNN', 'MOT17-10-FRCNN', 'MOT17-11-FRCNN', 'MOT17-02-FRCNN', 'MOT17-13-FRCNN']
+Grid Search Size: 1 combinations per fold.
+
+--- Starting Fold 1/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 1 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.573, FPS=13.77
+Fold 1 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.442)
+Evaluating Validation Set for Fold 1...
+Fold 1 Validation Result: MOTA=0.402, IDF1=0.564
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT PT ML   FP   FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-05-FRCNN 56.4% 59.5% 53.6% 65.5% 72.8% 133 30 82 21 1696 2387  55  111 40.2% 0.264  42  36  26
+OVERALL        56.4% 59.5% 53.6% 65.5% 72.8% 133 30 82 21 1696 2387  55  111 40.2% 0.264  42  36  26
+
+--- Starting Fold 2/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 2 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.433, IDF1=0.573, FPS=21.58
+Fold 2 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.433)
+Evaluating Validation Set for Fold 2...
+Fold 2 Validation Result: MOTA=0.491, IDF1=0.570
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-10-FRCNN 57.0% 60.5% 53.8% 69.3% 77.9% 57 21 31  5 2527 3940  65  219 49.1% 0.240  43  33  13
+OVERALL        57.0% 60.5% 53.8% 69.3% 77.9% 57 21 31  5 2527 3940  65  219 49.1% 0.240  43  33  13
+
+--- Starting Fold 3/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 3 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.576, FPS=18.12
+Fold 3 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.442)
+Evaluating Validation Set for Fold 3...
+Fold 3 Validation Result: MOTA=0.408, IDF1=0.537
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-11-FRCNN 53.7% 55.4% 52.1% 67.6% 71.8% 75 27 19 29 2506 3059  21  48 40.8% 0.166  11  14   4
+OVERALL        53.7% 55.4% 52.1% 67.6% 71.8% 75 27 19 29 2506 3059  21  48 40.8% 0.166  11  14   4
+
+--- Starting Fold 4/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 4 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.442, IDF1=0.575, FPS=24.34
+Fold 4 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.442)
+Evaluating Validation Set for Fold 4...
+Fold 4 Validation Result: MOTA=0.383, IDF1=0.529
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-09-FRCNN 52.9% 49.6% 56.7% 76.6% 67.1% 26 13 12  1 2003 1247  36  44 38.3% 0.189  19  21   5
+OVERALL        52.9% 49.6% 56.7% 76.6% 67.1% 26 13 12  1 2003 1247  36  44 38.3% 0.189  19  21   5
+
+--- Starting Fold 5/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 5 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.427, IDF1=0.565, FPS=24.21
+Fold 5 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.427)
+Evaluating Validation Set for Fold 5...
+Fold 5 Validation Result: MOTA=0.550, IDF1=0.641
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn  GT MT PT ML  FP   FN IDs  FM  MOTA  MOTP IDt IDa IDm
+MOT17-13-FRCNN 64.1% 80.7% 53.2% 60.6% 91.9% 110 36 51 23 620 4590  27  81 55.0% 0.223  30  18  23
+OVERALL        64.1% 80.7% 53.2% 60.6% 91.9% 110 36 51 23 620 4590  27  81 55.0% 0.223  30  18  23
+
+--- Starting Fold 6/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 6 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.420, IDF1=0.538, FPS=26.09
+Fold 6 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.420)
+Evaluating Validation Set for Fold 6...
+Fold 6 Validation Result: MOTA=0.466, IDF1=0.623
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-04-FRCNN 62.3% 77.6% 52.1% 56.9% 84.7% 83 25 31 27 4876 20498  30  128 46.6% 0.150  10  24   4
+OVERALL        62.3% 77.6% 52.1% 56.9% 84.7% 83 25 31 27 4876 20498  30  128 46.6% 0.150  10  24   4
+
+--- Starting Fold 7/7 ---
+Train Sequences: 6, Validation Sequences: 1
+Fold 7 - Testing Grid Config 1/1: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3}
+  -> Train Result: MOTA=0.465, IDF1=0.597, FPS=27.36
+Fold 7 Best Params: {'det_thresh': 0.5, 'det_thresh_low': 0.1, 'inference_size': 1280, 'iou_threshold': 0.3, 'max_age': 60, 'min_hits': 3, 'inertia': 0.2, 'delta_t': 3} (Score: 0.465)
+Evaluating Validation Set for Fold 7...
+Fold 7 Validation Result: MOTA=0.312, IDF1=0.436
+Fold Summary:
+                IDF1   IDP   IDR  Rcll  Prcn GT MT PT ML   FP    FN IDs   FM  MOTA  MOTP IDt IDa IDm
+MOT17-02-FRCNN 43.6% 58.2% 34.8% 45.7% 76.4% 62 10 28 24 2628 10086  65  118 31.2% 0.199  38  33   9
+OVERALL        43.6% 58.2% 34.8% 45.7% 76.4% 62 10 28 24 2628 10086  65  118 31.2% 0.199  38  33   9
+
+========================================
+Cross Validation (7-Fold) Completed.
+Overall MOTA: 0.4303 ± 0.0725
+Overall IDF1: 0.5571 ± 0.0628
+Overall Rcll: 0.6317 ± 0.0920
+Overall Prcn: 0.7750 ± 0.0780
+Overall IDs:  42.71 ± 17.19
+Overall Average FPS: 22.57
+========================================
