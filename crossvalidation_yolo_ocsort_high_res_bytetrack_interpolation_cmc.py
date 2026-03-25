@@ -709,11 +709,11 @@ def main():
     # --- 2. Grid Search Configuration ---
     # Current OC-SORT hyperparameters as lists (for grid search)
     param_grid = {
-        'det_thresh': [0.4, 0.5, 0.6],
-        'det_thresh_low': [0.05,0.1],
+        'det_thresh': [ 0.5],
+        'det_thresh_low': [0.1],
         'inference_size': [1280],
         'iou_threshold': [0.3],
-        'max_age': [30,60],
+        'max_age': [60],
         'min_hits': [3],
         'inertia': [0.2],
         'delta_t': [3]
